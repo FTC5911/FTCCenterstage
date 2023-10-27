@@ -21,16 +21,16 @@ public class delivery {
         double i = 0.0;
         double d = 0.005;
 
-        liftRight = hardwareMap.get(DcMotorEx.class,"liftRight");
+        //liftRight = hardwareMap.get(DcMotorEx.class,"liftRight");
         liftLeft = hardwareMap.get(DcMotorEx.class, "liftLeft");
 
-        liftRight.setDirection(DcMotorSimple.Direction.FORWARD); //this might not be needed; or the left slide should be the one being reversed
+        //liftRight.setDirection(DcMotorSimple.Direction.FORWARD); //this might not be needed; or the left slide should be the one being reversed
         liftLeft.setDirection(DcMotorSimple.Direction.REVERSE);
 
         liftLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        liftRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        //liftRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        liftRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        //liftRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         liftLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         controller = new PIDController(p, i, d);
@@ -38,21 +38,21 @@ public class delivery {
 
     }
 
-    private DcMotor liftRight;
+    //private DcMotor liftRight;
     private DcMotor liftLeft;
 
     private PIDController controller;
 
     public void extend(double liftSpeed) {
 
-        liftRight.setPower(Math.abs(liftSpeed));
+        //liftRight.setPower(Math.abs(liftSpeed));
         liftLeft.setPower(Math.abs(liftSpeed));
 
     }
 
     public void retract(double slideSpeed) {
 
-        liftRight.setPower(-Math.abs(slideSpeed));
+        //liftRight.setPower(-Math.abs(slideSpeed));
         liftLeft.setPower(-Math.abs(slideSpeed));
 
     }
@@ -60,14 +60,14 @@ public class delivery {
 
     public void stall() {
 
-        liftRight.setPower(0.1);
+        //liftRight.setPower(0.1);
         liftLeft.setPower(0.1);
 
     }
 
     public void moveToStage(String stage) {
 
-        int slidePosition = liftRight.getCurrentPosition();
+        int slidePosition = liftLeft.getCurrentPosition();
 
         int Position[] = {-75, 1000, 1750, 2500};
         String Stage[] = {"GROUND", "LOW", "MID", "HIGH"};
@@ -95,7 +95,7 @@ public class delivery {
 
             if (Math.abs(error) > 100) {
 
-                liftRight.setPower(power);
+                //liftRight.setPower(power);
                 liftLeft.setPower(power);
 
             } else {
@@ -111,8 +111,8 @@ public class delivery {
 
     public void reset(){
 
-        liftRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        liftRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        //liftRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //liftRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
     }
 }

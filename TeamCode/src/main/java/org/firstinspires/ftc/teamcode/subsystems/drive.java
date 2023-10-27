@@ -19,7 +19,7 @@ public class drive {
     private DcMotorEx driveFrontLeft;
     private DcMotorEx driveBackLeft;
 
-    //private BNO055IMU imu;
+    private BNO055IMU imu;
 
     private ElapsedTime runtime = new ElapsedTime();
 
@@ -65,7 +65,7 @@ public class drive {
 
 
 
-        //myOpMode.telemetry.addData(">", "we coo ");
+        //myOpMode.telemetry.addData(">", "we cookin ");
         //myOpMode.telemetry.update();
     }
 

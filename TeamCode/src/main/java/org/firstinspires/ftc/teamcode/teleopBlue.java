@@ -108,8 +108,21 @@ public class teleopBlue extends LinearOpMode {
             }
             if (gamepad1.right_trigger > 0.1){
                 intake.grab_pixel();
+
             } else if (gamepad1.left_trigger > 0.1){
                 intake.reverse_intake();
+
+            } else {
+                intake.no_feed();
+            }
+            if (gamepad1.dpad_up){
+                intake.spin_up();
+
+            } else if (gamepad1.dpad_down){
+                intake.spin_down();
+
+            } else {
+                intake.no_y();
             }
 
 
