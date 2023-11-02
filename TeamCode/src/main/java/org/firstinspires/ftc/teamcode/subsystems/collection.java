@@ -5,11 +5,16 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.arcrobotics.ftclib.controller.PIDController;
+
 
 public class collection {
 
 
     public collection(HardwareMap hardwareMap) {
+        double p = 0.2;
+        double i = 0.0;
+        double d = 0.005;
 
 
 
@@ -19,12 +24,14 @@ public class collection {
         intakeSpin = hardwareMap.get(DcMotor.class, "intakeSpin");
 
         clawLeft.setDirection(Servo.Direction.REVERSE);
-        intakeSpin.setDirection(DcMotorSimple.Direction.REVERSE);
+        intakeSpin.setDirection(DcMotorSimple.Direction.FORWARD);
 
         clawRight.setPosition(0);
         clawLeft.setPosition(0);
         intake.setPower(0);
         intakeSpin.setPower(0);
+
+        controller = new PIDController(p, i, d);
     }
 
     private Servo clawRight;
@@ -33,8 +40,23 @@ public class collection {
 
     private DcMotor intakeSpin;
 
+    private PIDController controller;
 
 
+
+
+
+
+
+
+
+
+
+
+
+    public void dont_move(){
+        intakeSpin.setPower(0.1);
+    }
 
     public void openClaw(){
 
@@ -48,19 +70,19 @@ public class collection {
         clawLeft.setPosition(1);
     }
     public void grab_pixel(){
-        intake.setPower(.3);
+        intake.setPower(1);
 
     } public void reverse_intake(){
-        intake.setPower(-.3);
+        intake.setPower(-1);
 
 
 
     } public void spin_up(){
-        intakeSpin.setPower(.875);
+        intakeSpin.setPower(.7);
 
 
     } public void spin_down(){
-        intakeSpin.setPower(-.875);
+        intakeSpin.setPower(-7);
 
 
 
@@ -71,6 +93,49 @@ public class collection {
         intake.setPower(0);
 
 
+    }
+    public void moveToStage(String stage) {
+
+        int slidePosition = intakeSpin.getCurrentPosition();
+
+        int Position[] = {500, 1350};
+        String Stage[] = {"GROUND", "LOW"};
+
+        int stageIndex = Byte.MAX_VALUE;
+        int res = 0;
+
+
+        for (int i = 0; i < Stage.length; i++) {
+
+            if (Stage[i].equals(stage)) {
+                stageIndex = i;
+                break;
+            }
+        }
+
+        if (stageIndex != Byte.MAX_VALUE) {
+
+            res = Position[stageIndex];
+            double pid = controller.calculate(slidePosition, res);
+
+            int error = res - slidePosition;
+
+            double power = pid + 0.1;
+
+            if (Math.abs(error) > 0) {
+
+                //liftRight.setPower(power);
+                intakeSpin.setPower(power);
+
+            } else {
+
+                dont_move();
+
+            }
+
+
+
+        }
     }
 
 

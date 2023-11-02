@@ -36,6 +36,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
+
 /*
  * This OpMode executes a Tank Drive control TeleOp a direct drive robot
  * The code is structured as an Iterative OpMode
@@ -61,7 +62,6 @@ public class RobotTeleopTank_Iterative extends OpMode{
     public Servo    rightClaw   = null;
 
     double clawOffset = 0;
-
     public static final double MID_SERVO   =  0.5 ;
     public static final double CLAW_SPEED  = 0.02 ;        // sets rate to move servo
     public static final double ARM_UP_POWER    =  0.50 ;   // Run arm motor up at 50% power
@@ -104,6 +104,8 @@ public class RobotTeleopTank_Iterative extends OpMode{
     public void init_loop() {
     }
 
+
+
     /*
      * Code to run ONCE when the driver hits PLAY
      */
@@ -127,10 +129,15 @@ public class RobotTeleopTank_Iterative extends OpMode{
         rightDrive.setPower(right);
 
         // Use gamepad left & right Bumpers to open and close the claw
-        if (gamepad1.right_bumper)
-            clawOffset += CLAW_SPEED;
-        else if (gamepad1.left_bumper)
-            clawOffset -= CLAW_SPEED;
+        if (gamepad1.right_bumper) {
+
+
+            rightClaw.setPosition(1);
+            leftClaw.setPosition(1);
+        } else if (gamepad1.left_bumper) {
+            rightClaw.setPosition(0);
+            leftClaw.setPosition(0);
+        }
 
         // Move both servos to new position.  Assume servos are mirror image of each other.
         clawOffset = Range.clip(clawOffset, -0.5, 0.5);
@@ -143,7 +150,7 @@ public class RobotTeleopTank_Iterative extends OpMode{
         else if (gamepad1.a)
             leftArm.setPower(ARM_DOWN_POWER);
         else
-            leftArm.setPower(0.0);
+            leftArm.setPower(0);
 
         // Send telemetry message to signify robot running;
         telemetry.addData("claw",  "Offset = %.2f", clawOffset);

@@ -12,6 +12,8 @@ import org.firstinspires.ftc.teamcode.subsystems.drive;
 import org.firstinspires.ftc.teamcode.subsystems.delivery;
 import org.firstinspires.ftc.teamcode.subsystems.collection;
 
+import java.sql.Timestamp;
+
 @TeleOp
 
 public class teleopBlue extends LinearOpMode {
@@ -54,10 +56,10 @@ public class teleopBlue extends LinearOpMode {
             final double fallSpeed = 0.8;
             final double liftSpeed = 1;
 
-            if (gamepad1.left_bumper) {
+            if (gamepad1.square) {
                 drive.drive(pFrontRight - 0.5, pBackRight + 0.5,
                         pFrontLeft + 0.5, pBackLeft - 0.5);
-            } else if (gamepad1.right_bumper) {
+            } else if (gamepad1.circle) {
                 drive.drive(pFrontRight + 0.5, pBackRight - 0.5,
                         pFrontLeft - 0.5, pBackLeft + 0.5);
             } else {
@@ -115,15 +117,15 @@ public class teleopBlue extends LinearOpMode {
             } else {
                 intake.no_feed();
             }
-            if (gamepad1.dpad_up){
+            if (gamepad1.right_bumper){
                 intake.spin_up();
-
-            } else if (gamepad1.dpad_down){
+            } else if (gamepad1.left_bumper){
                 intake.spin_down();
 
             } else {
-                intake.no_y();
+                intake.dont_move();
             }
+            resetRuntime();
 
 
             if (runtime.seconds() > 80 && runtime.seconds() < 90) {
