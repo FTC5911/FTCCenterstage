@@ -16,82 +16,85 @@ public class collection {
         double i = 0.0;
         double d = 0.005;
 
-
-
         clawRight = hardwareMap.get(Servo.class, "clawRight");
         clawLeft = hardwareMap.get(Servo.class, "clawLeft");
         intake = hardwareMap.get(DcMotor.class, "intake");
         intakeSpin = hardwareMap.get(DcMotor.class, "intakeSpin");
+        hangingArm = hardwareMap.get(Servo.class,"Hang");
 
         clawLeft.setDirection(Servo.Direction.REVERSE);
         intakeSpin.setDirection(DcMotorSimple.Direction.FORWARD);
 
         clawRight.setPosition(0);
         clawLeft.setPosition(0);
-        intake.setPower(0);
-        intakeSpin.setPower(0);
 
         controller = new PIDController(p, i, d);
+
     }
 
     private Servo clawRight;
     private Servo clawLeft;
     private DcMotor intake;
-
     private DcMotor intakeSpin;
-
     private PIDController controller;
 
+    private Servo hangingArm;
 
 
-
-
-
-
-
-
-
-
-
-
-    public void dont_move(){
+    public void dont_move() {
         intakeSpin.setPower(0.1);
     }
 
-    public void openClaw(){
+    public void openClaw() {
 
         clawRight.setPosition(0);
         clawLeft.setPosition(0);
 
     }
 
-    public void closeClaw(){
+    public void closeClaw() {
         clawRight.setPosition(1);
         clawLeft.setPosition(1);
     }
-    public void grab_pixel(){
+
+    public void grab_pixel() {
         intake.setPower(1);
 
-    } public void reverse_intake(){
+    }
+
+    public void reverse_intake() {
         intake.setPower(-1);
 
 
+    }
 
-    } public void spin_up(){
+    public void spin_up() {
         intakeSpin.setPower(.7);
 
 
-    } public void spin_down(){
+    }
+
+    public void spin_down() {
         intakeSpin.setPower(-7);
 
 
+    }
 
-    } public void no_y(){
+    public void no_y() {
         intakeSpin.setPower(0);
 
-    } public void no_feed(){
+    }
+
+    public void no_feed() {
         intake.setPower(0);
 
+
+    } public void hang() {
+        hangingArm.setPosition(1);
+
+
+    } public void unEmo(){
+        hangingArm.setPosition(0);
 
     }
     public void moveToStage(String stage) {

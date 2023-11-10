@@ -19,6 +19,7 @@ public class drive {
     private DcMotorEx driveFrontLeft;
     private DcMotorEx driveBackLeft;
 
+    private DcMotorEx[] motors = {driveFrontLeft, driveBackLeft, driveBackRight, driveFrontRight};
     private BNO055IMU imu;
 
     private ElapsedTime runtime = new ElapsedTime();
@@ -33,40 +34,22 @@ public class drive {
 
     public drive (HardwareMap hardwareMap) {
 
-
         driveFrontRight  = hardwareMap.get(DcMotorEx.class, "frontRight");
         driveBackRight = hardwareMap.get(DcMotorEx.class, "backRight");
         driveFrontLeft  = hardwareMap.get(DcMotorEx.class, "frontLeft");
         driveBackLeft = hardwareMap.get(DcMotorEx.class, "backLeft");
 
+        for (DcMotorEx motor: motors){
+            motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        }
 
         driveFrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
         driveBackRight.setDirection(DcMotorSimple.Direction.REVERSE);
         driveFrontLeft.setDirection(DcMotorSimple.Direction.FORWARD);
         driveBackLeft.setDirection(DcMotorSimple.Direction.FORWARD);
 
-
-        driveFrontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        driveBackRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        driveFrontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        driveBackLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-
-        driveFrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        driveBackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        driveFrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        driveBackLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-
-        driveFrontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        driveBackRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        driveFrontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        driveBackLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
-
-
-        //myOpMode.telemetry.addData(">", "we cookin ");
-        //myOpMode.telemetry.update();
     }
 
 

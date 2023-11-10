@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.arcrobotics.ftclib.controller.PIDController;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 
 public class delivery {
 
@@ -40,6 +41,9 @@ public class delivery {
 
     //private DcMotor liftRight;
     private DcMotor liftLeft;
+    private Servo plane;
+
+    private Servo keith;
 
     private PIDController controller;
 
@@ -61,8 +65,18 @@ public class delivery {
     public void stall() {
 
         //liftRight.setPower(0.1);
-        liftLeft.setPower(0.1);
+        liftLeft.setPower(0.05);
 
+    } public void launch(){
+        plane.setPosition(1);
+
+    } public void reload(){
+        plane.setPosition(0);
+
+    } public void dump(){
+        keith.setPosition(1);
+    } public void back_to_start(){
+        keith.setPosition(0);
     }
 
     public void moveToStage(String stage) {

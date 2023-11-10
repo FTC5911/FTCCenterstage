@@ -22,6 +22,7 @@ public class teleopBlue extends LinearOpMode {
     private ColorSensor colorSensor;
     private ColorSensor colorSensor2;
 
+
     String stage = "GROUND";
 
     public void runOpMode() throws InterruptedException {
@@ -68,10 +69,11 @@ public class teleopBlue extends LinearOpMode {
 
 
             if (gamepad2.left_trigger > 0.1) {
-                intake.openClaw();
+                slides.dump();
             } else if (gamepad2.right_trigger > 0.1) {
-                intake.closeClaw();
+                slides.back_to_start();
             }
+
 
             if (gamepad2.cross) {
                 stage = "GROUND";
@@ -85,94 +87,94 @@ public class teleopBlue extends LinearOpMode {
                 stage = "HIGH";
                 s = 1;
 
-            }
-            else if (gamepad2.square){
+            } else if (gamepad2.square) {
                 stage = "LOW";
                 s = 1;
             }
 
-            if(gamepad2.dpad_up){
+            if (gamepad2.dpad_up) {
                 slides.extend(liftSpeed);
                 s = 0;
 
-            }
-            else if (gamepad2.dpad_down){
+            } else if (gamepad2.dpad_down) {
                 slides.retract(fallSpeed);
                 s = 0;
 
-            }
-            else if(s==1){
+            } else if (s == 1) {
                 slides.moveToStage(stage);
-            }
-
-            else{
+            } else {
                 slides.stall();
             }
-            if (gamepad1.right_trigger > 0.1){
+            if (gamepad1.right_trigger > 0.1) {
                 intake.grab_pixel();
 
-            } else if (gamepad1.left_trigger > 0.1){
+            } else if (gamepad1.left_trigger > 0.1) {
                 intake.reverse_intake();
 
             } else {
                 intake.no_feed();
             }
-            if (gamepad1.right_bumper){
+            if (gamepad1.right_bumper) {
                 intake.spin_up();
-            } else if (gamepad1.left_bumper){
+            } else if (gamepad1.left_bumper) {
                 intake.spin_down();
 
             } else {
                 intake.dont_move();
-            }
-            resetRuntime();
+           /* } if (gamepad2.left_bumper) {
+                intake.hang();
+            } if (gamepad2.right_bumper) {
+                intake.unEmo();
+            }*/
+                if (gamepad2.left_bumper) {
+                    slides.launch();
+                } else if (gamepad2.right_bumper) {
+                    slides.reload();
+                }
+                resetRuntime();
 
 
-            if (runtime.seconds() > 80 && runtime.seconds() < 90) {
+                if (runtime.seconds() > 80 && runtime.seconds() < 90) {
 
-                lusp.flash("yellow","purple", runtime);
+                    lusp.flash("yellow", "purple", runtime);
 
-            } else {
+                } else {
 
 
-                if (((DistanceSensor) colorSensor).getDistance(DistanceUnit.MM) < 35 ^
-                        ((DistanceSensor) colorSensor2).getDistance(DistanceUnit.MM) < 52) {
+                    if (((DistanceSensor) colorSensor).getDistance(DistanceUnit.MM) < 35 ^
+                            ((DistanceSensor) colorSensor2).getDistance(DistanceUnit.MM) < 52) {
 
-                    lusp.setColor("yellow");
+                        lusp.setColor("yellow");
 
-                    if (i == 0){
+                        if (i == 0) {
 
-                        gamepad1.rumble(500);
-                        gamepad2.rumble(500);
-                        ++i;
+                            gamepad1.rumble(500);
+                            gamepad2.rumble(500);
+                            ++i;
+
+                        }
+
+
+                    } else if (((DistanceSensor) colorSensor).getDistance(DistanceUnit.MM) < 35 &&
+                            ((DistanceSensor) colorSensor2).getDistance(DistanceUnit.MM) < 52) {
+
+                        lusp.setColor("green");
+                        if (i == 1) {
+
+                            gamepad1.rumble(500);
+                            gamepad2.rumble(500);
+                            ++i;
+
+                        }
+                    } else {
+
+                        lusp.setColor("dark blue");
+                        i = 0;
 
                     }
-
-
-                }
-                else if (((DistanceSensor) colorSensor).getDistance(DistanceUnit.MM) < 35 &&
-                        ((DistanceSensor) colorSensor2).getDistance(DistanceUnit.MM) < 52){
-
-                    lusp.setColor("green");
-                    if(i==1){
-
-                        gamepad1.rumble(500);
-                        gamepad2.rumble(500);
-                        ++i;
-
-                    }
                 }
 
-
-
-                else {
-
-                    lusp.setColor("dark blue");
-                    i = 0;
-
-                }
             }
-
         }
     }
 }
