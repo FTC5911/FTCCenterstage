@@ -65,11 +65,7 @@ public class teleopRed extends LinearOpMode {
             }
 
 
-            if (gamepad2.left_trigger > 0.1) {
-                claw.openClaw();
-            } else if (gamepad2.right_trigger > 0.1) {
-                claw.closeClaw();
-            }
+
 
             if (gamepad2.cross) {
                 stage = "GROUND";

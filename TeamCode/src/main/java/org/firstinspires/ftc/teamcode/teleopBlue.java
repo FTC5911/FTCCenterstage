@@ -38,6 +38,8 @@ public class teleopBlue extends LinearOpMode {
         int i = 0;
         int s = 0;
 
+        slides.back_to_start();
+
         waitForStart();
         if (isStopRequested()) return;
         while (opModeIsActive()) {
@@ -58,11 +60,11 @@ public class teleopBlue extends LinearOpMode {
             final double liftSpeed = 1;
 
             if (gamepad1.square) {
-                drive.drive(pFrontRight - 0.5, pBackRight + 0.5,
-                        pFrontLeft + 0.5, pBackLeft - 0.5);
-            } else if (gamepad1.circle) {
                 drive.drive(pFrontRight + 0.5, pBackRight - 0.5,
                         pFrontLeft - 0.5, pBackLeft + 0.5);
+            } else if (gamepad1.circle) {
+                drive.drive(pFrontRight - 0.5, pBackRight + 0.5,
+                        pFrontLeft + 0.5, pBackLeft - 0.5);
             } else {
                 drive.drive(pFrontRight, pBackRight, pFrontLeft, pBackLeft);
             }
@@ -121,16 +123,11 @@ public class teleopBlue extends LinearOpMode {
 
             } else {
                 intake.dont_move();
-           /* } if (gamepad2.left_bumper) {
-                intake.hang();
-            } if (gamepad2.right_bumper) {
-                intake.unEmo();
-            }*/
-                if (gamepad2.left_bumper) {
+            } if (gamepad2.left_bumper) {
                     slides.launch();
-                } else if (gamepad2.right_bumper) {
+            } else if (gamepad2.right_bumper) {
                     slides.reload();
-                }
+            }
                 resetRuntime();
 
 
@@ -177,4 +174,4 @@ public class teleopBlue extends LinearOpMode {
             }
         }
     }
-}
+

@@ -40,9 +40,9 @@ public class drive {
         driveBackLeft = hardwareMap.get(DcMotorEx.class, "backLeft");
 
         for (DcMotorEx motor: motors){
-            motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            //motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            //motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            //motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         }
 
         driveFrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -89,7 +89,8 @@ public class drive {
          */
 
 
-        double powerFrontRight = Math.sin(angle) - Math.cos(angle);
+        double powerFrontRight = Math.sin(angle) -
+                Math.cos(angle);
         double powerBackRight = Math.sin(angle) + Math.cos(angle);
         double powerFrontLeft = Math.sin(angle) + Math.cos(angle);
         double powerBackLeft = Math.sin(angle) - Math.cos(angle);

@@ -75,11 +75,7 @@ import org.firstinspires.ftc.teamcode.subsystems.odometry;
 
 
 
-                if (gamepad1.left_trigger > 0.1) {
-                    claw.openClaw();
-                } else if (gamepad1.right_trigger > 0.1) {
-                    claw.closeClaw();
-                }
+
 
                 if (gamepad1.cross) {
                     stage = "GROUND";

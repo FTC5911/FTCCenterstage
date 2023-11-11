@@ -27,12 +27,15 @@ public class delivery {
 
         //liftRight.setDirection(DcMotorSimple.Direction.FORWARD); //this might not be needed; or the left slide should be the one being reversed
         liftLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        plane = hardwareMap.get(Servo.class, "plane");
+        keith = hardwareMap.get(Servo.class, "keith");
 
         liftLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         //liftRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         //liftRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         liftLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        liftLeft.setDirection(DcMotorSimple.Direction.REVERSE);
 
         controller = new PIDController(p, i, d);
         reset();
@@ -65,7 +68,7 @@ public class delivery {
     public void stall() {
 
         //liftRight.setPower(0.1);
-        liftLeft.setPower(0.05);
+        liftLeft.setPower(0.08);
 
     } public void launch(){
         plane.setPosition(1);
