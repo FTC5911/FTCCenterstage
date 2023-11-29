@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
@@ -23,6 +24,7 @@ public class teleopBlue extends LinearOpMode {
     private ColorSensor colorSensor2;
 
 
+
     String stage = "GROUND";
 
     public void runOpMode() throws InterruptedException {
@@ -35,8 +37,16 @@ public class teleopBlue extends LinearOpMode {
         colorSensor = hardwareMap.colorSensor.get("colorSensor");
         colorSensor2 = hardwareMap.colorSensor.get("colorSensor2");
 
+        boolean intakeToggle = false;
+
         int i = 0;
         int s = 0;
+
+        Gamepad currentGamepad1 = new Gamepad();
+        Gamepad currentGamepad2 = new Gamepad();
+
+        Gamepad previousGamepad1 = new Gamepad();
+        Gamepad previousGamepad2 = new Gamepad();
 
         slides.back_to_start();
 
@@ -59,6 +69,14 @@ public class teleopBlue extends LinearOpMode {
             final double fallSpeed = 0.8;
             final double liftSpeed = 1;
 
+          previousGamepad1.copy(currentGamepad1);
+          previousGamepad2.copy(currentGamepad2);
+
+
+
+          currentGamepad1.copy(gamepad1);
+          currentGamepad2.copy(gamepad2);
+
             if (gamepad1.square) {
                 drive.drive(pFrontRight + 0.5, pBackRight - 0.5,
                         pFrontLeft - 0.5, pBackLeft + 0.5);
@@ -71,13 +89,35 @@ public class teleopBlue extends LinearOpMode {
 
 
             if (gamepad2.left_trigger > 0.1) {
-                slides.dump();
-            } else if (gamepad2.right_trigger > 0.1) {
                 slides.back_to_start();
+            } else if (gamepad2.right_trigger > 0.1) {
+                slides.dump();
+            } else if (gamepad2.left_bumper){
+                slides.gyat();
+            }
+
+            if (currentGamepad2.right_bumper && !previousGamepad2.right_bumper){
+                intakeToggle = !intakeToggle;
+            }
+
+            if (intakeToggle) {
+                slides.ready_to_go();
+            } else {
+                slides.back_to_sleep();
             }
 
 
-            if (gamepad2.cross) {
+            if (gamepad2.dpad_left){
+                slides.ready_to_go();
+            } else if (gamepad2.dpad_right){
+                slides.back_to_sleep();
+            }
+
+
+
+
+
+            /*if (gamepad2.cross) {
                 stage = "GROUND";
                 s = 1;
 
@@ -92,7 +132,7 @@ public class teleopBlue extends LinearOpMode {
             } else if (gamepad2.square) {
                 stage = "LOW";
                 s = 1;
-            }
+            }*/
 
             if (gamepad2.dpad_up) {
                 slides.extend(liftSpeed);
@@ -127,6 +167,12 @@ public class teleopBlue extends LinearOpMode {
                     slides.launch();
             } else if (gamepad2.right_bumper) {
                     slides.reload();
+            } if (gamepad2.triangle){
+                slides.initiate_hang();
+            } else if (gamepad2.x){
+                slides.lower_hang();
+            } else {
+                slides.stop_hang();
             }
                 resetRuntime();
 

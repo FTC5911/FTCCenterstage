@@ -29,6 +29,8 @@ public class delivery {
         liftLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         plane = hardwareMap.get(Servo.class, "plane");
         keith = hardwareMap.get(Servo.class, "keith");
+        hang = hardwareMap.get(DcMotor.class, "hang");
+        hanger_mover = hardwareMap.get(Servo.class, "hanger_mover");
 
         liftLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         //liftRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -46,7 +48,11 @@ public class delivery {
     private DcMotor liftLeft;
     private Servo plane;
 
+    private DcMotor hang;
+
     private Servo keith;
+
+    private Servo hanger_mover;
 
     private PIDController controller;
 
@@ -77,10 +83,31 @@ public class delivery {
         plane.setPosition(0);
 
     } public void dump(){
-        keith.setPosition(1);
+        keith.setPosition(0.5);
     } public void back_to_start(){
-        keith.setPosition(0);
+        keith.setPosition(1);
+    } public void gyat(){
+        keith.setPosition(0.75);
     }
+
+
+    public void initiate_hang(){
+        hang.setPower(1);
+    } public void lower_hang(){
+        hang.setPower(-1);
+    } public void stop_hang(){
+        hang.setPower(0);
+    }
+
+
+
+    public void ready_to_go(){
+        hanger_mover.setPosition(0.1);
+    } public void back_to_sleep(){
+        hanger_mover.setPosition(0);
+    }
+
+
 
     public void moveToStage(String stage) {
 

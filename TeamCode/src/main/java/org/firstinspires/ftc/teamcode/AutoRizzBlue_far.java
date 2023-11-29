@@ -1,22 +1,17 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DistanceSensor;
-import com.qualcomm.robotcore.hardware.ColorSensor;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
-import org.firstinspires.ftc.teamcode.subsystems.LEDs;
-import org.firstinspires.ftc.teamcode.subsystems.drive;
-import org.firstinspires.ftc.teamcode.subsystems.delivery;
 import org.firstinspires.ftc.teamcode.subsystems.collection;
+import org.firstinspires.ftc.teamcode.subsystems.delivery;
+import org.firstinspires.ftc.teamcode.subsystems.drive;
 
-@Autonomous(name = "AutoRizz", group = "LinearOpMode")
+@Autonomous(name = "AutoRizzBlue_far", group = "LinearOpMode")
 
-public class AutoRizz extends LinearOpMode{
+public class AutoRizzBlue_far extends LinearOpMode{
 
     private DcMotor leftDrive   = null;
     private DcMotor   rightDrive  = null;
@@ -68,8 +63,6 @@ public class AutoRizz extends LinearOpMode{
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
-        drive.moveToPosition(.75, 10,0,3);
-        drive.moveToPosition(.75, 0, 30, 5);
  // pause to display final telemetry message.
     }
 

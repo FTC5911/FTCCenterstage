@@ -89,8 +89,7 @@ public class drive {
          */
 
 
-        double powerFrontRight = Math.sin(angle) -
-                Math.cos(angle);
+        double powerFrontRight = Math.sin(angle) - Math.cos(angle);
         double powerBackRight = Math.sin(angle) + Math.cos(angle);
         double powerFrontLeft = Math.sin(angle) + Math.cos(angle);
         double powerBackLeft = Math.sin(angle) - Math.cos(angle);
