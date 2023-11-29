@@ -56,5 +56,7 @@ public class hangTuner extends OpMode {
         telemetry.addData("Lift Position", slidePosition);
         telemetry.addData("Target", target);
         telemetry.update();
+
+        }
     }
-}
+
