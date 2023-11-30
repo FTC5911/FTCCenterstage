@@ -16,7 +16,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 public class hangTuner extends OpMode {
     private Motor hang;
 
-    private PIDController controller;
+    private PIDController controller2;
 
     public static double p = 0.0, i = 0.0, d = 0.0;
     public static int target = 0;
@@ -35,7 +35,7 @@ public class hangTuner extends OpMode {
         hang.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
 
 
-        controller = new PIDController(p,i,d);
+        controller2 = new PIDController(p,i,d);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
 
@@ -46,10 +46,10 @@ public class hangTuner extends OpMode {
 
         int slidePosition = hang.getCurrentPosition();
 
-        double pid = controller.calculate(slidePosition, target);
+        double pid = controller2.calculate(slidePosition, target);
 
         // 0.1 is the feedforward component needed to stall slides against gravity
-        double power = pid + 0.1;
+        double power = pid + 0;
 
         hang.set(power);
 

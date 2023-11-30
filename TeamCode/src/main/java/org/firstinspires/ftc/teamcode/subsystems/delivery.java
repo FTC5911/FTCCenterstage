@@ -22,6 +22,10 @@ public class delivery {
         double i = 0.0;
         double d = 0.005;
 
+        double kp = 0.0;
+        double ki = 0.0;
+        double kd = 0.00091;
+
         //liftRight = hardwareMap.get(DcMotorEx.class,"liftRight");
         liftLeft = hardwareMap.get(DcMotorEx.class, "liftLeft");
 
@@ -35,12 +39,17 @@ public class delivery {
         liftLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         //liftRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
+        hang.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        hang.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
         //liftRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         liftLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         liftLeft.setDirection(DcMotorSimple.Direction.REVERSE);
 
         controller = new PIDController(p, i, d);
+        controller2 = new PIDController(kp, ki, kd);
         reset();
+
 
     }
 
@@ -55,6 +64,8 @@ public class delivery {
     private Servo hanger_mover;
 
     private PIDController controller;
+
+    private PIDController controller2;
 
     public void extend(double liftSpeed) {
 
@@ -76,37 +87,51 @@ public class delivery {
         //liftRight.setPower(0.1);
         liftLeft.setPower(0.08);
 
-    } public void launch(){
+    }
+
+    public void launch() {
         plane.setPosition(1);
 
-    } public void reload(){
+    }
+
+    public void reload() {
         plane.setPosition(0);
 
-    } public void dump(){
+    }
+
+    public void dump() {
         keith.setPosition(0.5);
-    } public void back_to_start(){
+    }
+
+    public void back_to_start() {
         keith.setPosition(1);
-    } public void gyat(){
+    }
+
+    public void gyat() {
         keith.setPosition(0.75);
     }
 
 
-    public void initiate_hang(){
+    public void initiate_hang() {
         hang.setPower(1);
-    } public void lower_hang(){
+    }
+
+    public void lower_hang() {
         hang.setPower(-1);
-    } public void stop_hang(){
+    }
+
+    public void stop_hang() {
         hang.setPower(0);
     }
 
 
-
-    public void ready_to_go(){
+    public void ready_to_go() {
         hanger_mover.setPosition(0.1);
-    } public void back_to_sleep(){
-        hanger_mover.setPosition(0);
     }
 
+    public void back_to_sleep() {
+        hanger_mover.setPosition(0);
+    }
 
 
     public void moveToStage(String stage) {
@@ -149,14 +174,49 @@ public class delivery {
             }
 
 
-
         }
     }
 
-    public void reset(){
+    public void stage_hang(String stage) {
 
-        //liftRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        //liftRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        int slidePosition = hang.getCurrentPosition();
 
+        int Position[] = {-100, 100};
+        String Stage[] = {"GROUND", "LOW"};
+
+        int stageIndex = Byte.MAX_VALUE;
+        int res = 0;
+
+
+        for (int ki = 0; ki < Stage.length; ki++) {
+
+            if (Stage[ki].equals(stage)) {
+                stageIndex = ki;
+                break;
+            }
+        }
+
+        if (stageIndex != Byte.MAX_VALUE) {
+
+            res = Position[stageIndex];
+            double pid = controller2.calculate(slidePosition, res);
+
+            int error = res - slidePosition;
+
+            double power = pid + 0.1;
+
+            if (Math.abs(error) > 100) {
+
+                //liftRight.setPower(power);
+                hang.setPower(power);
+
+
+            }
+
+
+        }
+    } public void reset(){
+        hang.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        hang.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 }

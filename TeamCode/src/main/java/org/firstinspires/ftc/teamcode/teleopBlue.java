@@ -26,6 +26,7 @@ public class teleopBlue extends LinearOpMode {
 
 
     String stage = "GROUND";
+    String hang_stage = "Ground";
 
     public void runOpMode() throws InterruptedException {
 
@@ -41,6 +42,9 @@ public class teleopBlue extends LinearOpMode {
 
         int i = 0;
         int s = 0;
+
+        int ki = 0;
+        int ks = 0;
 
         Gamepad currentGamepad1 = new Gamepad();
         Gamepad currentGamepad2 = new Gamepad();
@@ -117,22 +121,16 @@ public class teleopBlue extends LinearOpMode {
 
 
 
-            /*if (gamepad2.cross) {
-                stage = "GROUND";
-                s = 1;
+            if (gamepad2.x) {
+                hang_stage = "GROUND";
+                ks = 1;
 
             } else if (gamepad2.triangle) {
-                stage = "MID";
-                s = 1;
-
-            } else if (gamepad2.circle) {
-                stage = "HIGH";
-                s = 1;
-
-            } else if (gamepad2.square) {
-                stage = "LOW";
-                s = 1;
-            }*/
+                hang_stage = "LOW";
+                ks = 1;
+            } else if (ks == 1){
+                slides.stage_hang(hang_stage);
+            }
 
             if (gamepad2.dpad_up) {
                 slides.extend(liftSpeed);
@@ -167,12 +165,6 @@ public class teleopBlue extends LinearOpMode {
                     slides.launch();
             } else if (gamepad2.right_bumper) {
                     slides.reload();
-            } if (gamepad2.triangle){
-                slides.initiate_hang();
-            } else if (gamepad2.x){
-                slides.lower_hang();
-            } else {
-                slides.stop_hang();
             }
                 resetRuntime();
 
