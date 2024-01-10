@@ -2,24 +2,14 @@ package org.firstinspires.ftc.teamcode.subsystems.util;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.DistanceSensor;
-import com.qualcomm.robotcore.hardware.ColorSensor;
-import com.qualcomm.robotcore.util.ElapsedTime;
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
-import org.firstinspires.ftc.teamcode.subsystems.LEDs;
-import org.firstinspires.ftc.teamcode.subsystems.drive;
-import org.firstinspires.ftc.teamcode.subsystems.delivery;
 import org.firstinspires.ftc.teamcode.subsystems.collection;
-
-import java.sql.Timestamp;
+import org.firstinspires.ftc.teamcode.subsystems.delivery;
+import org.firstinspires.ftc.teamcode.subsystems.drive;
 
 @Autonomous
 
-public class autoRizzisty extends LinearOpMode{
+public class autoRizzisty_red_close extends LinearOpMode{
 
      @Override
      public void runOpMode(){
@@ -33,11 +23,14 @@ public class autoRizzisty extends LinearOpMode{
           if (isStopRequested()) return;
           while (opModeIsActive())
           {
-               drive.drive(1, 1, 1, 1);
+               drive.drive(.2, .2, .2, .2);
                sleep(1000);
                drive.drive(0,0,0,0);
                sleep(1000);
-
+               drive.drive(.2,-.2,-.2,.2);
+               sleep(2000);
+               drive.drive(0,0,0,0);
+               sleep(26000);
 
           }
 

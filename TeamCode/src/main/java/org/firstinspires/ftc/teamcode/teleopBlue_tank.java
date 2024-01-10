@@ -2,22 +2,20 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-
 import org.firstinspires.ftc.teamcode.subsystems.LEDs;
-import org.firstinspires.ftc.teamcode.subsystems.drive;
-import org.firstinspires.ftc.teamcode.subsystems.delivery;
 import org.firstinspires.ftc.teamcode.subsystems.collection;
-
-import java.sql.Timestamp;
+import org.firstinspires.ftc.teamcode.subsystems.delivery;
+import org.firstinspires.ftc.teamcode.subsystems.drive;
 
 @TeleOp
 
-public class teleopBlue extends LinearOpMode {
+public class teleopBlue_tank extends LinearOpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
     private ColorSensor colorSensor;
@@ -73,7 +71,8 @@ public class teleopBlue extends LinearOpMode {
             double pFrontLeft = (y - x - rx) / denominator;
             double pBackLeft = (y + x - rx) / denominator;
 
-
+            double right = gamepad1.right_stick_y;
+            double left = gamepad1.left_stick_y;
 
             final double fallSpeed = 0.8;
             final double liftSpeed = 1;
@@ -86,13 +85,13 @@ public class teleopBlue extends LinearOpMode {
             currentGamepad2.copy(gamepad2);
 
             if (gamepad1.right_stick_button) {
-                drive.drive(pFrontRight + 0.5, pBackRight - 0.5,
-                        pFrontLeft - 0.5, pBackLeft + 0.5);
+                drive.drive(0.7, -0.7,
+                        - 0.7, 0.7);
             } else if (gamepad1.left_stick_button) {
-                drive.drive(pFrontRight - 0.5, pBackRight + 0.5,
-                        pFrontLeft + 0.5, pBackLeft - 0.5);
+                drive.drive(-0.7, 0.7,
+                        0.7, -0.7);
             } else {
-                drive.drive(pFrontRight, pBackRight, pFrontLeft, pBackLeft);
+                drive.drive(right, right, left, left);
             }
 
 

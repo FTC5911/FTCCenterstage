@@ -19,11 +19,9 @@ public class drive {
     private DcMotorEx driveFrontLeft;
     private DcMotorEx driveBackLeft;
 
-    private DcMotorEx[] motors = {driveFrontLeft, driveBackLeft, driveBackRight, driveFrontRight};
     private BNO055IMU imu;
 
     private ElapsedTime runtime = new ElapsedTime();
-
 
     static final double     motorTicks = 384.5;
     static final double     driveGearReduction = 1.0 ;
@@ -39,10 +37,12 @@ public class drive {
         driveFrontLeft  = hardwareMap.get(DcMotorEx.class, "frontLeft");
         driveBackLeft = hardwareMap.get(DcMotorEx.class, "backLeft");
 
+        DcMotorEx[] motors = {driveFrontLeft, driveBackLeft, driveBackRight, driveFrontRight};
+
         for (DcMotorEx motor: motors){
-            //motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            //motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            //motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         }
 
         driveFrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -97,8 +97,6 @@ public class drive {
 
 
 
-
-        if (myOpMode.opModeIsActive()){
 
             // this sets the target position of each motor AND its direction that it will travel using the RUN_TO_POSITION method later on
             // Math.signum is used to find the sign (either + or -) of each motors power
@@ -156,7 +154,7 @@ public class drive {
 
             myOpMode.sleep(rest);
 
-        }
+
     }
 
     public void drive(double frontRightPower,double backRightPower, double frontLeftPower, double backLeftPower){
@@ -375,6 +373,12 @@ public class drive {
 
             myOpMode.sleep(rest);
         }
+    } public void set_powers(){
+        driveFrontRight.setPower(0);
+        driveBackRight.setPower(0);
+        driveFrontLeft.setPower(0);
+        driveBackLeft.setPower(0);
+
     }
 
 }
