@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.subsystems.util;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.subsystems.collection;
@@ -8,6 +9,7 @@ import org.firstinspires.ftc.teamcode.subsystems.delivery;
 import org.firstinspires.ftc.teamcode.subsystems.drive;
 
 @Autonomous
+@Disabled
 
 public class autoRizzisty_red_far extends LinearOpMode{
 

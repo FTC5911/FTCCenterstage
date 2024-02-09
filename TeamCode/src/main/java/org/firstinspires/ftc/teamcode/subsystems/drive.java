@@ -273,7 +273,8 @@ public class drive {
 
         /*
          creates new variables to be used for each of the wheels target position, it is important for each wheel to have its own target position
-         as the moveToPosition method is used to move straight up/down, strafe left/right and diagonally at any angle all in one method.
+         as the moveToPosition method is used to move straight up/down,
+          strafe left/right and diagonally at any angle all in one method.
         */
 
 
@@ -379,6 +380,11 @@ public class drive {
         driveFrontLeft.setPower(0);
         driveBackLeft.setPower(0);
 
+    } public void power(double frontRightp, double backRightp, double frontLeftp, double backLeftp ){
+        driveFrontRight.setPower(frontRightp);
+        driveFrontLeft.setPower(frontLeftp);
+        driveBackRight.setPower(backRightp);
+        driveBackLeft.setPower(backLeftp);
     }
 
 }

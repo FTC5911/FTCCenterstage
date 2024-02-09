@@ -17,12 +17,13 @@ public class collection {
         double d = 0.005;
 
 
-        intake = hardwareMap.get(DcMotor.class, "intake");
-        intakeSpin = hardwareMap.get(DcMotor.class, "intakeSpin");
+        intake = hardwareMap.get(DcMotor.class, "Intake");
+        pixie = hardwareMap.get(Servo.class, "pixie");
+       // intakeSpin = hardwareMap.get(DcMotor.class, "intakeSpin");
 
 
 
-        intakeSpin.setDirection(DcMotorSimple.Direction.FORWARD);
+        //intakeSpin.setDirection(DcMotorSimple.Direction.FORWARD);
 
 
 
@@ -31,51 +32,59 @@ public class collection {
     }
 
     private DcMotor intake;
-    private DcMotor intakeSpin;
+    //private DcMotor intakeSpin;
+
+    private Servo pixie;
     private PIDController controller;
 
 
 
 
-    public void dont_move() {
+    /*public void dont_move() {
         intakeSpin.setPower(0.1);
-    }
+    }*/
 
 
 
     public void grab_pixel() {
-        intake.setPower(1);
+        intake.setPower(-0.85);
 
     }
 
     public void reverse_intake() {
-        intake.setPower(-1);
+        intake.setPower(0.85);
 
 
     }
 
-    public void spin_up() {
+    /*public void spin_up() {
         intakeSpin.setPower(.5);
 
 
-    }
+    }*/
 
-    public void spin_down() {
+    /*public void spin_down() {
         intakeSpin.setPower(-.5);
 
 
-    }
+    }*/
 
-    public void no_y() {
+    /*public void no_y() {
         intakeSpin.setPower(0);
 
-    }
+    }*/
 
     public void no_feed() {
         intake.setPower(0);
 
+    } public void close_pixie(){
+        pixie.setPosition(0);
+    } public void open_pixie(){
+        pixie.setPosition(1);
+    } public void middle_pixie(){
+        pixie.setPosition(0);
     }
-    public void moveToStage(String stage) {
+    /*public void moveToStage(String stage) {
 
         int slidePosition = intakeSpin.getCurrentPosition();
 
@@ -116,9 +125,8 @@ public class collection {
 
 
 
-        }
+        }*/
     }
 
 
 
-}

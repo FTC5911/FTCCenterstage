@@ -34,13 +34,14 @@ public class delivery {
         plane = hardwareMap.get(Servo.class, "plane");
         keith = hardwareMap.get(Servo.class, "keith");
         hang = hardwareMap.get(DcMotor.class, "hang");
-        hanger_mover = hardwareMap.get(Servo.class, "hanger_mover");
-        cherry = hardwareMap.get(Servo.class, "cherry");
+        the_gallows = hardwareMap.get(DcMotor.class, "the_gallows");
+
 
         liftLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         //liftRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         hang.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        the_gallows.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         //liftRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         liftLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -59,11 +60,12 @@ public class delivery {
 
     private DcMotor hang;
 
+    private DcMotor the_gallows;
     private Servo keith;
 
-    private Servo hanger_mover;
 
-    private Servo cherry;
+
+
 
     private PIDController controller;
 
@@ -87,7 +89,7 @@ public class delivery {
     public void stall() {
 
         //liftRight.setPower(0.1);
-        liftLeft.setPower(0.08);
+        liftLeft.setPower(-0.08);
 
     }
 
@@ -102,44 +104,36 @@ public class delivery {
     }
 
     public void dump() {
-        keith.setPosition(0.25);
+        keith.setPosition(0.18);
     }
 
     public void back_to_start() {
-        keith.setPosition(0);
+        keith.setPosition(0.55);
     }
 
     public void gyat() {
-        keith.setPosition(0.75);
+        keith.setPosition(0.5);
     }
-
 
     public void initiate_hang() {
         hang.setPower(1);
+        the_gallows.setPower(1);
     }
 
     public void lower_hang() {
         hang.setPower(-1);
+        the_gallows.setPower(-1);
     }
 
     public void stop_hang() {
         hang.setPower(0);
+        the_gallows.setPower(0);
     }
 
 
-    public void ready_to_go() {
-        hanger_mover.setPosition(0.1);
-    }
 
-    public void back_to_sleep() {
-        hanger_mover.setPosition(0);
-    }
 
-    public void the_gates(){
-        cherry.setPosition(0.6);
-    } public void close_the_gates(){
-        cherry.setPosition(0);
-    }
+
 
 
     public void moveToStage(String stage) {

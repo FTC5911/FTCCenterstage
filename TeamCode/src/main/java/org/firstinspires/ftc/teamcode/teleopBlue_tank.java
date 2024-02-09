@@ -99,20 +99,21 @@ public class teleopBlue_tank extends LinearOpMode {
                 intakeToggle = !intakeToggle;
             }
 
-            if (intakeToggle) {
+           /* if (intakeToggle) {
                 slides.ready_to_go();
             } else {
                 slides.back_to_sleep();
-            }
+            }*/
 
-            if (currentGamepad2.dpad_left && !previousGamepad2.dpad_left) {
+
+           /* if (currentGamepad2.dpad_left && !previousGamepad2.dpad_left) {
                 intakeToggle2 = !intakeToggle2;
             }
 
             if (intakeToggle2) {
                 slides.close_the_gates();
             } else {
-                slides.the_gates();
+                slides.the_gates();*/
 
 
                 if (currentGamepad2.dpad_right && !previousGamepad2.dpad_right) {
@@ -165,7 +166,7 @@ public class teleopBlue_tank extends LinearOpMode {
                 } else {
                     intake.no_feed();
                 }
-                if (gamepad2.right_bumper) {
+                /*if (gamepad2.right_bumper) {
                     intake.spin_up();
                 } else if (gamepad2.left_bumper) {
                     intake.spin_down();
@@ -173,7 +174,7 @@ public class teleopBlue_tank extends LinearOpMode {
                 } else {
                     intake.dont_move();
 
-                }
+                }*/
                 resetRuntime();
 
 
@@ -221,4 +222,3 @@ public class teleopBlue_tank extends LinearOpMode {
         }
     }
 
-}

@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.Gamepad;
@@ -23,6 +24,11 @@ public class teleopBlue extends LinearOpMode {
     private ColorSensor colorSensor;
     private ColorSensor colorSensor2;
 
+    private DcMotor frontRight;
+    private DcMotor frontLeft;
+    private DcMotor backRight;
+    private DcMotor backLeft;
+
 
     String stage = "GROUND";
     //String hang_stage = "GROUND";
@@ -36,6 +42,17 @@ public class teleopBlue extends LinearOpMode {
 
         colorSensor = hardwareMap.colorSensor.get("colorSensor");
         colorSensor2 = hardwareMap.colorSensor.get("colorSensor2");
+
+        frontLeft = hardwareMap.dcMotor.get("frontLeft");
+        frontRight = hardwareMap.dcMotor.get("frontRight");
+        backLeft = hardwareMap.dcMotor.get("backLeft");
+        backRight = hardwareMap.dcMotor.get("backRight");
+
+        frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
 
         boolean intakeToggle = false;
         boolean intakeToggle2 = false;
@@ -54,15 +71,16 @@ public class teleopBlue extends LinearOpMode {
         Gamepad previousGamepad1 = new Gamepad();
         Gamepad previousGamepad2 = new Gamepad();
 
-        slides.dump();
+        slides.back_to_start();
         slides.reload();
+        intake.close_pixie();
 
         waitForStart();
         if (isStopRequested()) return;
         while (opModeIsActive()) {
 
 
-            double y = gamepad1.left_stick_y;
+            double y = (gamepad1.left_stick_y);
             double x = gamepad1.left_stick_x * 1.1;
             double rx = gamepad1.right_stick_x;
 
@@ -71,11 +89,17 @@ public class teleopBlue extends LinearOpMode {
             double pFrontRight = (y + x + rx) / denominator;
             double pBackRight = (y - x + rx) / denominator;
             double pFrontLeft = (y - x - rx) / denominator;
-            double pBackLeft = (y + x - rx) / denominator;
+            double pBackLeft =  (y + x - rx) / denominator;
+
+            //frontLeft.setPower(pFrontLeft * 1);
+            //frontRight.setPower(pFrontRight * 1);
+            //backLeft.setPower(pBackLeft * 1);
+            //backRight.setPower(pBackRight * 1);
 
 
 
-            final double fallSpeed = 0.8;
+
+            final double fallSpeed = 1;
             final double liftSpeed = 1;
 
             previousGamepad1.copy(currentGamepad1);
@@ -96,7 +120,14 @@ public class teleopBlue extends LinearOpMode {
             }
 
 
-            if (currentGamepad2.right_bumper && !previousGamepad2.right_bumper) {
+             //else {
+               // frontLeft.setPower(pFrontLeft * 1);
+                //frontRight.setPower(pFrontRight * 1);
+                //backRight.setPower(pBackRight * 1);
+                //backLeft.setPower(pBackLeft * 1);
+            //}
+
+            /*if (currentGamepad2.right_bumper && !previousGamepad2.right_bumper) {
                 intakeToggle = !intakeToggle;
             }
 
@@ -104,26 +135,38 @@ public class teleopBlue extends LinearOpMode {
                 slides.ready_to_go();
             } else {
                 slides.back_to_sleep();
-            }
-
-            if (currentGamepad2.dpad_left && !previousGamepad2.dpad_left) {
-                intakeToggle2 = !intakeToggle2;
-            }
-
-            if (intakeToggle2) {
-                slides.close_the_gates();
-            } else {
-                slides.the_gates();
+            }*/
 
 
-                if (currentGamepad2.dpad_right && !previousGamepad2.dpad_right) {
+
+
+                /*if (currentGamepad2.dpad_right && !previousGamepad2.dpad_right) {
                     intakeToggle3 = !intakeToggle3;
                 }
                 if (intakeToggle3) {
-                    slides.back_to_start();
-                } else {
                     slides.dump();
+                } else if (gamepad2.dpad_left){
+                    slides.gyat();
+                }else {
+                    slides.back_to_start();
+                }*/
+
+
+                /*if (currentGamepad2.dpad_right && !previousGamepad2.dpad_right) {
+                    intakeToggle3 = !intakeToggle3;
                 }
+                if (intakeToggle3) {
+                    slides.dump();
+                } else if (gamepad2.dpad_left){
+                    slides.back_to_start();
+                }*/
+                if (gamepad1.left_trigger > 0.1){
+                    slides.dump();
+                } else if (gamepad1.right_trigger > 0.1){
+                    slides.back_to_start();
+                }
+
+
 
                 if (currentGamepad1.square && !previousGamepad1.square) {
                     intakeToggle4 = !intakeToggle4;
@@ -145,11 +188,11 @@ public class teleopBlue extends LinearOpMode {
 
 
                 if (gamepad2.dpad_up) {
-                    slides.extend(liftSpeed);
+                    slides.retract(liftSpeed);
                     s = 0;
 
                 } else if (gamepad2.dpad_down) {
-                    slides.retract(fallSpeed);
+                    slides.extend(fallSpeed);
                     s = 0;
 
                 } else if (s == 1) {
@@ -157,16 +200,22 @@ public class teleopBlue extends LinearOpMode {
                 } else {
                     slides.stall();
                 }
-                if (gamepad1.right_trigger > 0.1) {
+                if (gamepad2.right_trigger > 0.1
+                ) {
                     intake.grab_pixel();
 
-                } else if (gamepad1.left_trigger > 0.1) {
+                } else if (gamepad2.left_trigger > 0.1) {
                     intake.reverse_intake();
 
                 } else {
                     intake.no_feed();
-                }
-                if (gamepad2.right_bumper) {
+                } if (gamepad1.dpad_left) {
+                intake.open_pixie();
+            } else if (gamepad1.dpad_right){
+                    intake.close_pixie();
+            }
+
+                /*if (gamepad2.right_bumper) {
                     intake.spin_up();
                 } else if (gamepad2.left_bumper) {
                     intake.spin_down();
@@ -174,7 +223,7 @@ public class teleopBlue extends LinearOpMode {
                 } else {
                     intake.dont_move();
 
-                }
+                }*/
                 resetRuntime();
 
 
@@ -222,4 +271,3 @@ public class teleopBlue extends LinearOpMode {
         }
     }
 
-}

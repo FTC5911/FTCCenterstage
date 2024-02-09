@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.subsystems.util;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -18,7 +19,7 @@ import org.firstinspires.ftc.teamcode.subsystems.collection;
 import java.sql.Timestamp;
 
 @Autonomous
-
+@Disabled
 public class autoRizzisty extends LinearOpMode{
 
      @Override
