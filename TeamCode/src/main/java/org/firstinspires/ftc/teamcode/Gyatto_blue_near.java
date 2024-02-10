@@ -153,27 +153,26 @@ package org.firstinspires.ftc.teamcode;
 
          switch (snapshotAnalysis) {
              case LEFT:
-                 forward(DRIVE_SPEED, -10.5, -10.5, 5);
+                 forward(DRIVE_SPEED, -25, -25, 5);
                  forward(DRIVE_SPEED, -20.5, 20.5, 5);
-                 forward(DRIVE_SPEED, -8.5, -8.5, 5);
+                 forward(DRIVE_SPEED, -4.5, -4.5, 5);
                  bf.open_pixie();
-                 forward(DRIVE_SPEED, 7, 7, 5);
-                 forward(DRIVE_SPEED, -3, 3, 5);
-                 Strafe(DRIVE_SPEED, -10, -10, 5);
-                 forward(DRIVE_SPEED, 30, 30, 5);
+                 forward(DRIVE_SPEED, 6, 6, 5);
+                 //forward(DRIVE_SPEED, -3, 3, 5);
+                 Strafe(DRIVE_SPEED, 40, 40, 5);
+                 forward(DRIVE_SPEED, -30, -30, 5);
 
              {
                  break;
              }
 
              case RIGHT:
-                 forward(DRIVE_SPEED, -10.5, -10.5, 5);
+                 forward(DRIVE_SPEED, -20, -20, 5);
                  forward(DRIVE_SPEED, 20.5, -20.5, 5);
-                 forward(DRIVE_SPEED, -8.5, -8.5, 5);
+                 forward(DRIVE_SPEED, -5, -5, 5);
                  bf.open_pixie();
                  forward(DRIVE_SPEED, 7, 7, 5);
-                 forward(DRIVE_SPEED, 3, -3, 5);
-                 Strafe(DRIVE_SPEED, 10, 10, 5);
+                 Strafe(DRIVE_SPEED, -20, -20, 5);
                  forward(DRIVE_SPEED, 30, 30, 5);
              {
 
@@ -182,12 +181,12 @@ package org.firstinspires.ftc.teamcode;
              }
 
              case CENTER:
-                 forward(DRIVE_SPEED, -15, -15, 5);
-                 forward(DRIVE_SPEED, -2.5, -2.5, 5);
+                 forward(DRIVE_SPEED, -27, -27, 5);
+                 forward(DRIVE_SPEED, -4, -4, 5);
                  bf.open_pixie();
-                 forward(DRIVE_SPEED, 4.5, 4.5, 5);
-                 forward(DRIVE_SPEED, 10, 10, 5);
-                 Strafe(DRIVE_SPEED, -30, -30, 5);
+                 forward(DRIVE_SPEED, 7, 7, 5);
+                 forward(DRIVE_SPEED, 18, 18, 5);
+                 Strafe(DRIVE_SPEED, 50, 50, 5);
              {
 
                  break;

@@ -104,7 +104,7 @@ public class delivery {
     }
 
     public void dump() {
-        keith.setPosition(0.18);
+        keith.setPosition(0.14);
     }
 
     public void back_to_start() {

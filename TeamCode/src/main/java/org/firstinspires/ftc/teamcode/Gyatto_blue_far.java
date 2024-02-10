@@ -163,7 +163,7 @@ public class Gyatto_blue_far extends LinearOpMode
                 forward(DRIVE_SPEED,-8.5,-8.5,5);
                 bf.open_pixie();
                 forward(DRIVE_SPEED,7,7,5);
-                forward(DRIVE_SPEED,3,-3,5);
+                forward(DRIVE_SPEED,-3, 3,5);
                 Strafe(DRIVE_SPEED,-30,-30,5);
                 forward(DRIVE_SPEED,-105,-105,5);
 
