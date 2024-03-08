@@ -21,6 +21,7 @@
 
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -41,6 +42,7 @@ import org.openftc.easyopencv.OpenCvPipeline;
  * 100% accurate) method of detecting the skystone when lined up with
  * the sample regions over the first 3 stones.
  */
+@Disabled
 @TeleOp
 public class Pipeline_red extends LinearOpMode
 {
@@ -117,11 +119,15 @@ public class Pipeline_red extends LinearOpMode
         /*
          * The core values which define the location and size of the sample regions
          */
-        static final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(0,0);
-        static final Point REGION2_TOPLEFT_ANCHOR_POINT = new Point(426,0);
-        static final Point REGION3_TOPLEFT_ANCHOR_POINT = new Point(852,0);
+        static final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(0,200);
+        static final Point REGION2_TOPLEFT_ANCHOR_POINT = new Point(426,200);
+        static final Point REGION3_TOPLEFT_ANCHOR_POINT = new Point(852,200);
         static final int REGION_WIDTH = 426;
         static final int REGION_HEIGHT = 960;
+        static final int CENTER_HEIGHT = 200;
+        static final int LEFT_HEIGHT = 350;
+
+        static final int RIGHT_HEIGHT = 350;
 
         /*
          * Points which actually define the sample region rectangles, derived from above values
@@ -145,19 +151,19 @@ public class Pipeline_red extends LinearOpMode
                 REGION1_TOPLEFT_ANCHOR_POINT.y);
         Point region1_pointB = new Point(
                 REGION1_TOPLEFT_ANCHOR_POINT.x + REGION_WIDTH,
-                REGION1_TOPLEFT_ANCHOR_POINT.y + REGION_HEIGHT);
+                REGION1_TOPLEFT_ANCHOR_POINT.y + LEFT_HEIGHT);
         Point region2_pointA = new Point(
                 REGION2_TOPLEFT_ANCHOR_POINT.x,
                 REGION2_TOPLEFT_ANCHOR_POINT.y);
         Point region2_pointB = new Point(
                 REGION2_TOPLEFT_ANCHOR_POINT.x + REGION_WIDTH,
-                REGION2_TOPLEFT_ANCHOR_POINT.y + REGION_HEIGHT);
+                REGION2_TOPLEFT_ANCHOR_POINT.y + CENTER_HEIGHT);
         Point region3_pointA = new Point(
                 REGION3_TOPLEFT_ANCHOR_POINT.x,
                 REGION3_TOPLEFT_ANCHOR_POINT.y);
         Point region3_pointB = new Point(
                 REGION3_TOPLEFT_ANCHOR_POINT.x + REGION_WIDTH,
-                REGION3_TOPLEFT_ANCHOR_POINT.y + REGION_HEIGHT);
+                REGION3_TOPLEFT_ANCHOR_POINT.y + RIGHT_HEIGHT);
 
         /*
          * Working variables

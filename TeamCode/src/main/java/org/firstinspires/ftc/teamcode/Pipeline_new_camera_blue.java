@@ -44,7 +44,7 @@ import org.openftc.easyopencv.OpenCvPipeline;
  */
 @Disabled
 @TeleOp
-public class Pipeline extends LinearOpMode
+public class Pipeline_new_camera_blue extends LinearOpMode
 {
     OpenCvInternalCamera phoneCam;
     SkystoneDeterminationPipeline pipeline;
@@ -74,7 +74,7 @@ public class Pipeline extends LinearOpMode
             @Override
             public void onOpened()
             {
-                phoneCam.startStreaming(320,240, OpenCvCameraRotation.SIDEWAYS_LEFT);
+                phoneCam.startStreaming(2560,1472, OpenCvCameraRotation.SIDEWAYS_LEFT);
             }
 
             @Override
@@ -119,15 +119,15 @@ public class Pipeline extends LinearOpMode
         /*
          * The core values which define the location and size of the sample regions
          */
-        static final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(0,200);
-        static final Point REGION2_TOPLEFT_ANCHOR_POINT = new Point(426,250);
-        static final Point REGION3_TOPLEFT_ANCHOR_POINT = new Point(852,200);
-        static final int REGION_WIDTH = 426;
+        static final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(109,600);
+        static final Point REGION2_TOPLEFT_ANCHOR_POINT = new Point(850,98);
+        static final Point REGION3_TOPLEFT_ANCHOR_POINT = new Point(1700,600);
+        static final int REGION_WIDTH = 700;
         static final int REGION_HEIGHT = 960;
-        static final int CENTER_HEIGHT = 250;
-        static final int LEFT_HEIGHT = 350;
+        static final int CENTER_HEIGHT = 700;
+        static final int LEFT_HEIGHT = 700;
 
-        static final int RIGHT_HEIGHT = 350;
+        static final int RIGHT_HEIGHT = 700;
 
         /*
          * Points which actually define the sample region rectangles, derived from above values

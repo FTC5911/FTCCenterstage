@@ -155,48 +155,100 @@ package org.firstinspires.ftc.teamcode;
          {
              case LEFT:
              {
+                 sleep(5000);
                  bf.close_pixie();
-                 forward(DRIVE_SPEED,-21,-21 ,5);
+                 forward(DRIVE_SPEED,-24,-24 ,5);
                  forward(DRIVE_SPEED,-20.5,20.5,5);
                  forward(DRIVE_SPEED,-3,-3,7);
                  bf.open_pixie();
+                 sleep(500);
                  forward(DRIVE_SPEED,4,4,5);
                  //forward(DRIVE_SPEED,3.5,-3.5,5);
                  Strafe(DRIVE_SPEED,-35,-35,5);
-                 forward(DRIVE_SPEED,100,100,5);
-                 Strafe(DRIVE_SPEED,20,20,5);
+                 forward(DRIVE_SPEED,80,80,5);
+                 forward(DRIVE_SPEED,-40,40,5);
+                 Strafe(DRIVE_SPEED,-25,-25,5);
+                 forward(DRIVE_SPEED,-10,-10,5);
+                 gf.retract(1);
+                 sleep(750);
+                 gf.stall();
+                 sleep(1000);
+                 gf.dump();
+                 sleep(1000);
+                 gf.gyat();
+                 sleep(1000);
+                 gf.extend(1);
+                 sleep(600);
+                 gf.stall();
+                 forward(DRIVE_SPEED,5,5,5);
+                 Strafe(DRIVE_SPEED,15,15,5);
+                 forward(DRIVE_SPEED,-15,-15,5);
 
                  break;
              }
 
              case RIGHT:
              {
+                 sleep(5000);
                  bf.close_pixie();
-                 forward(DRIVE_SPEED,-21,-21 ,5);
+                 forward(DRIVE_SPEED,-24,-24 ,5);
                  forward(DRIVE_SPEED,20.5,-20.5,5);
                  Strafe(DRIVE_SPEED,-3,3,5);
                  forward(DRIVE_SPEED,-6,-6,5);
                  bf.open_pixie();
-                 forward(DRIVE_SPEED,5,5,5);
+                 sleep(500);
+                 forward(DRIVE_SPEED,8,8,5);
+                 Strafe(DRIVE_SPEED,37,37,5);
+                 forward(DRIVE_SPEED,-80,-80,5);
+                 Strafe(DRIVE_SPEED,-35,-35,5);
+                 forward(DRIVE_SPEED,-8,-8,5);
+                 gf.retract(1);
+                 sleep(750);
+                 gf.stall();
+                 sleep(1000);
+                 gf.dump();
+                 sleep(1000);
+                 gf.gyat();
+                 sleep(1000);
+                 gf.extend(.4);
+                 sleep(1000);
+                 gf.stall();
+                 forward(DRIVE_SPEED,9,9,5);
                  Strafe(DRIVE_SPEED,35,35,5);
-                 forward(DRIVE_SPEED,-100,-100,5);
-                 Strafe(DRIVE_SPEED,-20,-20,5);
-
+                 forward(DRIVE_SPEED,-15,-15,5);
 
                  break;
              }
 
              case CENTER:
              {
+                 sleep(5000);
                  bf.close_pixie();
                  forward(DRIVE_SPEED,-27,-27,5);
+                 forward(DRIVE_SPEED,0,0,5);
                  bf.open_pixie();
+                 sleep(500);
                  forward(DRIVE_SPEED,10,10,5);
                  Strafe(DRIVE_SPEED, 20, 20, 5);
                  forward(DRIVE_SPEED, -30,-30,5);
                  forward(TURN_SPEED,-21,21,5);
-                 forward(DRIVE_SPEED,110,110,5);
-                 Strafe(DRIVE_SPEED,15,15,5);
+                 forward(DRIVE_SPEED,90,90,5);
+                 Strafe(DRIVE_SPEED,25,25,5);
+                 forward(DRIVE_SPEED,-8,-8,5);
+                 gf.retract(1);
+                 sleep(750);
+                 gf.stall();
+                 sleep(1000);
+                 gf.dump();
+                 sleep(1000);
+                 gf.gyat();
+                 sleep(1000);
+                 gf.extend(.4);
+                 sleep(1000);
+                 gf.stall();
+                 forward(DRIVE_SPEED,10,10,5);
+                 Strafe(DRIVE_SPEED,-30,-30,5);
+                 forward(DRIVE_SPEED,-15,-15,5);
                  break;
              }
          }

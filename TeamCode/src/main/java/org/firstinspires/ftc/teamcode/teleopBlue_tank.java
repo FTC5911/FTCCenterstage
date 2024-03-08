@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.ColorSensor;
@@ -13,6 +14,7 @@ import org.firstinspires.ftc.teamcode.subsystems.collection;
 import org.firstinspires.ftc.teamcode.subsystems.delivery;
 import org.firstinspires.ftc.teamcode.subsystems.drive;
 
+@Disabled
 @TeleOp
 
 public class teleopBlue_tank extends LinearOpMode {

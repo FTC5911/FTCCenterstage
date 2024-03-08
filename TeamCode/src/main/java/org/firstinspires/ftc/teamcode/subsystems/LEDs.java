@@ -21,8 +21,8 @@ public class LEDs {
 
     public void setColor(String Color) {
 
-        String color[] = {"green", "red", "rainbow", "blue", "purple", "dark blue", "pink", "white", "yellow"};
-        double colorID[] = {0.71, 0.67, 0.22, 0.65, 0.75, 0.73, 0.66, 0.77, 0.69};
+        String color[] = {"green", "red", "rainbow", "blue", "purple", "dark blue", "pink", "white", "yellow", "djrainbow", "breathing_blue"};
+        double colorID[] = {0.71, 0.67, 0.22, 0.65, 0.75, 0.73, 0.66, 0.77, 0.69, 0.31, 0.46};
 
         int colorIndex = Byte.MAX_VALUE;
         double res = 0;

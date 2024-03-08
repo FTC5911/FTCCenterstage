@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.util;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -18,7 +18,7 @@ import org.firstinspires.ftc.teamcode.subsystems.drive;
 
 @TeleOp
 
-public class teleopRed extends LinearOpMode {
+public class teleopBlueLEDTEST extends LinearOpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
     private ColorSensor fanum;
@@ -68,7 +68,7 @@ public class teleopRed extends LinearOpMode {
         int s = 0;
 
         int Fanum = 0;
-        int LEDPaint = 0;
+        int LEDPaint = 1;
 
         //int ki = 0;
         //int ks = 0;
@@ -100,8 +100,8 @@ public class teleopRed extends LinearOpMode {
 
             public void setColor(String Color) {
 
-                String color[] = {"green", "red", "rainbow", "blue", "purple", "dark blue", "pink", "white", "yellow", "djrainbow", "breathing_blue"};
-                double colorID[] = {0.71, 0.67, 0.22, 0.65, 0.75, 0.73, 0.66, 0.76, 0.69, 0.31, 0.46};
+                String color[] = {"green", "red", "rainbow", "blue", "purple", "dark blue", "pink", "white", "yellow", "djrainbow", "breathing_blue", "ordinary"};
+                double colorID[] = {0.71, 0.67, 0.22, 0.65, 0.75, 0.73, 0.66, 0.76, 0.68, 0.31, 0.46, 0.38};
 
                 int colorIndex = Byte.MAX_VALUE;
                 double res = 0;
@@ -142,16 +142,16 @@ public class teleopRed extends LinearOpMode {
         while (opModeIsActive()) {
 
 
-            double rx = (gamepad1.left_stick_y);
-            double x = (gamepad1.left_stick_x * 1);
-            double y = (gamepad1.right_stick_x);
+            double y = (gamepad1.left_stick_y);
+            double x = gamepad1.left_stick_x * 1.1;
+            double rx = gamepad1.right_stick_x;
 
             double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
 
             double pFrontRight = (y + x + rx) / denominator;
             double pBackRight = (y - x + rx) / denominator;
-            double pFrontLeft = (y + x - rx) / denominator;
-            double pBackLeft = (y - x - rx) / denominator;
+            double pFrontLeft = (y - x - rx) / denominator;
+            double pBackLeft = (y + x - rx) / denominator;
 
             //frontLeft.setPower(pFrontLeft * 1);
             //frontRight.setPower(pFrontRight * 1);
@@ -177,7 +177,6 @@ public class teleopRed extends LinearOpMode {
                         pFrontLeft + 0.5, pBackLeft - 0.5);
             } else {
                 drive.drive(pFrontRight, pBackRight, pFrontLeft, pBackLeft);
-
             }
 
 
@@ -236,16 +235,6 @@ public class teleopRed extends LinearOpMode {
             } else {
                 slides.reload();
             }
-
-
-
-                /*if (currentGamepad2.dpad_right && !previousGamepad2.dpad_right) {
-                    intakeToggle5 = !intakeToggle5;
-                    intakeToggle6 = !intakeToggle6;
-                } else if (!intakeToggle5) {
-                lusp.setColor("blue");
-                } else if (intake)*/
-
 
             if (gamepad2.x) {
                 slides.lower_hang();
@@ -329,30 +318,9 @@ public class teleopRed extends LinearOpMode {
                         gamepad2.rumble(500);
                         ++Fanum;
 
-                    } else if (((DistanceSensor) fanum).getDistance(DistanceUnit.MM) >= 35 &&
-                            ((DistanceSensor) tax).getDistance(DistanceUnit.MM) < 34) {
-
-                        lusp.setColor("pink");
-                        if (Fanum == 1) {
-
-                            gamepad1.rumble(500);
-                            gamepad2.rumble(500);
-                            ++Fanum;
-
-                        }
-                    } else if (((DistanceSensor) fanum).getDistance(DistanceUnit.MM) < 34 &&
-                            ((DistanceSensor) tax).getDistance(DistanceUnit.MM) >= 35) {
-
-                        lusp.setColor("pink");
-                        if (Fanum == 1) {
-
-                            gamepad1.rumble(500);
-                            gamepad2.rumble(500);
-                            ++Fanum;
-
-                        }
-                    } else if (((DistanceSensor) fanum).getDistance(DistanceUnit.MM) < 34 &&
-                            ((DistanceSensor) tax).getDistance(DistanceUnit.MM) < 34) {
+                    }
+                    else if  (((DistanceSensor) fanum).getDistance(DistanceUnit.MM) >= 35 &&
+                            ((DistanceSensor) tax).getDistance(DistanceUnit.MM) < 20) {
 
                         lusp.setColor("yellow");
                         if (Fanum == 1) {
@@ -362,20 +330,47 @@ public class teleopRed extends LinearOpMode {
                             ++Fanum;
 
                         }
+                    }
+                    else if  (((DistanceSensor) fanum).getDistance(DistanceUnit.MM) < 20 &&
+                            ((DistanceSensor) tax).getDistance(DistanceUnit.MM) >= 35)
+                    {
+
+                        lusp.setColor("yellow");
+                        if (Fanum == 1) {
+
+                            gamepad1.rumble(500);
+                            gamepad2.rumble(500);
+                            ++Fanum;
+
+                        }
+                    }
+                    else if (((DistanceSensor) fanum).getDistance(DistanceUnit.MM) < 20 &&
+                            ((DistanceSensor) tax).getDistance(DistanceUnit.MM) < 20) {
+
+                        lusp.setColor("pink");
+                        if (Fanum == 1) {
+
+                            gamepad1.rumble(500);
+                            gamepad2.rumble(500);
+                            ++Fanum;
+
+                        }
                     } else {
 
-                        lusp.setColor("red");
+                        lusp.setColor("dark blue");
                         Fanum = 0;
 
                     }
-                    if (gamepad2.circle) {
+                    if (gamepad2.circle){
                         LEDPaint = 1;
                     }
                 }
 
 
             }
+
         }
+
+
     }
 }
-

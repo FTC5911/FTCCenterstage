@@ -46,8 +46,8 @@ public class Gyatto_blue_far extends LinearOpMode
 {
 
     OpenCvWebcam webcam;
-    Pipeline.SkystoneDeterminationPipeline pipeline;
-    Pipeline.SkystoneDeterminationPipeline.SkystonePosition snapshotAnalysis = Pipeline.SkystoneDeterminationPipeline.SkystonePosition.LEFT; // default
+    Pipeline_new_camera_blue.SkystoneDeterminationPipeline pipeline_new_camera;
+    Pipeline_new_camera_blue.SkystoneDeterminationPipeline.SkystonePosition snapshotAnalysis = Pipeline_new_camera_blue.SkystoneDeterminationPipeline.SkystonePosition.LEFT; // default
 
     private DcMotor frontLeft = null;
     private DcMotor frontRight = null;
@@ -110,15 +110,15 @@ public class Gyatto_blue_far extends LinearOpMode
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
-        pipeline = new Pipeline.SkystoneDeterminationPipeline();
-        webcam.setPipeline(pipeline);
+        pipeline_new_camera = new Pipeline_new_camera_blue.SkystoneDeterminationPipeline();
+        webcam.setPipeline(pipeline_new_camera);
 
         webcam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener()
         {
             @Override
             public void onOpened()
             {
-                webcam.startStreaming(1280,960, OpenCvCameraRotation.UPRIGHT);
+                webcam.startStreaming(2560,1472, OpenCvCameraRotation.UPRIGHT);
             }
 
             @Override
@@ -133,7 +133,7 @@ public class Gyatto_blue_far extends LinearOpMode
          */
         while (!isStarted() && !isStopRequested())
         {
-            telemetry.addData("Realtime analysis", pipeline.getAnalysis());
+            telemetry.addData("Realtime analysis", pipeline_new_camera.getAnalysis());
             telemetry.update();
 
             // Don't burn CPU cycles busy-looping in this sample
@@ -145,7 +145,7 @@ public class Gyatto_blue_far extends LinearOpMode
          * for later use. We must do this because the analysis will continue
          * to change as the camera view changes once the robot starts moving!
          */
-        snapshotAnalysis = pipeline.getAnalysis();
+        snapshotAnalysis = pipeline_new_camera.getAnalysis();
 
         /*
          * Show that snapshot on the telemetry
@@ -159,13 +159,28 @@ public class Gyatto_blue_far extends LinearOpMode
             {
                 bf.close_pixie();
                 forward(DRIVE_SPEED,-21,-21 ,5);
-                forward(DRIVE_SPEED,-20.5,20.5,5);
+                forward(DRIVE_SPEED,-20,20,5);
                 forward(DRIVE_SPEED,-8.5,-8.5,5);
                 bf.open_pixie();
                 forward(DRIVE_SPEED,7,7,5);
                 forward(DRIVE_SPEED,-3, 3,5);
                 Strafe(DRIVE_SPEED,-30,-30,5);
-                forward(DRIVE_SPEED,-105,-105,5);
+                forward(DRIVE_SPEED,-80,-80,5);
+                Strafe(DRIVE_SPEED,20,20,5);
+                forward(DRIVE_SPEED,-8,-8,5);
+                gf.retract(1);
+                sleep(750);
+                gf.stall();
+                sleep(1000);
+                gf.dump();
+                sleep(1000);
+                gf.gyat();
+                sleep(1000);
+                gf.extend(.4);
+                sleep(1000);
+                gf.stall();
+                forward(DRIVE_SPEED,9,9,5);
+                Strafe(DRIVE_SPEED,-30,-30,5);
 
                 break;
             }
@@ -173,14 +188,36 @@ public class Gyatto_blue_far extends LinearOpMode
             case RIGHT:
             {
                 bf.close_pixie();
-                forward(DRIVE_SPEED,-21,-21 ,5);
+                sleep(5000);
+                //Strafe(DRIVE_SPEED,5,5,5);
+                forward(DRIVE_SPEED,-24,-24 ,5);
                 forward(DRIVE_SPEED,20.5,-20.5,5);
-                forward(DRIVE_SPEED,-2.5,-2.5,5);
+                forward(DRIVE_SPEED,-3,-3,5);
+                sleep(500);
                 bf.open_pixie();
+                sleep(500);
+                forward(DRIVE_SPEED,-1,1,5);
+                sleep(500);
                 forward(DRIVE_SPEED,4,4,5);
-                Strafe(DRIVE_SPEED,28,28,5);
-                forward(DRIVE_SPEED,95,95,5);
-                Strafe(DRIVE_SPEED,-10,-10,5);
+                Strafe(DRIVE_SPEED,30,30,5);
+                forward(DRIVE_SPEED,75,75,5);
+                Strafe(DRIVE_SPEED,-27.5,-27.5,5);
+                forward(DRIVE_SPEED,39,-39,5);
+                forward(DRIVE_SPEED,-10,-10,5);
+                gf.retract(1);
+                sleep(750);
+                gf.stall();
+                sleep(500);
+                gf.dump();
+                sleep(1000);
+                gf.gyat();
+                sleep(1000);
+                gf.extend(1);
+                sleep(750);
+                forward(DRIVE_SPEED,5,5,5);
+                Strafe(DRIVE_SPEED,-23,-23,5);
+                forward(DRIVE_SPEED,-15,-15,5);
+
 
 
                 break;
@@ -189,16 +226,33 @@ public class Gyatto_blue_far extends LinearOpMode
             case CENTER:
             {
                 bf.close_pixie();
+                sleep(5000);
                 forward(DRIVE_SPEED,-27,-27,5);
                 bf.open_pixie();
+                sleep(1000);
                 forward(DRIVE_SPEED,10,10,5);
                 Strafe(DRIVE_SPEED, -20, -20, 5);
-                forward(DRIVE_SPEED, -30,-30,5);
-                forward(TURN_SPEED,21,-21,5);
-                forward(DRIVE_SPEED,110,110,5);
-                Strafe(DRIVE_SPEED,-15,-15,5);
+                forward(DRIVE_SPEED, -33.5,-33.5,5);
+                forward(TURN_SPEED,-20,20,5);
+                forward(DRIVE_SPEED,-75,-75,5);
+                Strafe(DRIVE_SPEED,30.5,30.5,5);
+                forward(DRIVE_SPEED,-27,-27,5);
+                gf.retract(1);
+                sleep(800);
+                gf.stall();
+                gf.dump();
+                sleep(1500);
+                gf.gyat();
+                sleep(1000);
+                gf.extend(1);
+                sleep(600);
+                gf.stall();
+                forward(DRIVE_SPEED,10,10,5);
+                Strafe(DRIVE_SPEED,-28.5,-28.5,5);
+                forward(DRIVE_SPEED,-15,-15,5);
                 break;
             }
+
         }
 
         /* You wouldn't have this in your autonomous, this is just to prevent the sample from ending */

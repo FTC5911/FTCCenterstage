@@ -6,6 +6,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
@@ -21,17 +23,19 @@ import java.sql.Timestamp;
 public class teleopBlue extends LinearOpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
-    private ColorSensor colorSensor;
-    private ColorSensor colorSensor2;
+    private ColorSensor fanum;
+    private ColorSensor tax;
 
     private DcMotor frontRight;
     private DcMotor frontLeft;
     private DcMotor backRight;
     private DcMotor backLeft;
 
+    private LinearOpMode myOpMode = null;
 
     String stage = "GROUND";
     //String hang_stage = "GROUND";
+
 
     public void runOpMode() throws InterruptedException {
 
@@ -40,13 +44,14 @@ public class teleopBlue extends LinearOpMode {
         delivery slides = new delivery(hardwareMap);
         LEDs lusp = new LEDs(hardwareMap);
 
-        colorSensor = hardwareMap.colorSensor.get("colorSensor");
-        colorSensor2 = hardwareMap.colorSensor.get("colorSensor2");
+        fanum = hardwareMap.colorSensor.get("fanum");
+        tax = hardwareMap.colorSensor.get("tax");
 
         frontLeft = hardwareMap.dcMotor.get("frontLeft");
         frontRight = hardwareMap.dcMotor.get("frontRight");
         backLeft = hardwareMap.dcMotor.get("backLeft");
         backRight = hardwareMap.dcMotor.get("backRight");
+
 
         frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -58,9 +63,14 @@ public class teleopBlue extends LinearOpMode {
         boolean intakeToggle2 = false;
         boolean intakeToggle3 = false;
         boolean intakeToggle4 = false;
+        boolean intakeToggle5 = false;
+        boolean intakeToggle6 = false;
 
         int i = 0;
         int s = 0;
+
+        int Fanum = 0;
+        int LEDPaint = 0;
 
         //int ki = 0;
         //int ks = 0;
@@ -75,28 +85,80 @@ public class teleopBlue extends LinearOpMode {
         slides.reload();
         intake.close_pixie();
 
+
+        class LEDs {
+
+            private LinearOpMode myOpMode = null;
+
+            public LEDs(HardwareMap hardwareMap) {
+
+                lusp = hardwareMap.get(Servo.class, "lusp");
+
+            }
+
+
+            private Servo lusp;
+
+
+            public void setColor(String Color) {
+
+                String color[] = {"green", "red", "rainbow", "blue", "purple", "dark blue", "pink", "white", "yellow", "djrainbow", "breathing_blue"};
+                double colorID[] = {0.71, 0.67, 0.22, 0.65, 0.75, 0.73, 0.66, 0.76, 0.69, 0.31, 0.46};
+
+                int colorIndex = Byte.MAX_VALUE;
+                double res = 0;
+
+                for (int Fanum = 0; Fanum < color.length; Fanum++) {
+
+                    if (color[Fanum].equals(Color)) {
+                        colorIndex = Fanum;
+                        break;
+                    }
+                }
+
+                if (colorIndex != Byte.MAX_VALUE) {
+
+                    res = colorID[colorIndex];
+                    lusp.setPosition(res);
+
+                }
+            }
+
+            public void flash(String color1, String color2, ElapsedTime runTime) {
+
+                if ((int) runTime.seconds() % 2 != 0) {
+                    setColor(color1);
+
+                } else {
+
+                    setColor(color2);
+                }
+
+            }
+
+        }
+
+
         waitForStart();
         if (isStopRequested()) return;
         while (opModeIsActive()) {
 
 
-            double y = (gamepad1.left_stick_y);
-            double x = gamepad1.left_stick_x * 1.1;
-            double rx = gamepad1.right_stick_x;
+            double rx = (gamepad1.left_stick_y);
+            double x = (gamepad1.left_stick_x * 1);
+            double y = (gamepad1.right_stick_x);
 
             double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
 
             double pFrontRight = (y + x + rx) / denominator;
             double pBackRight = (y - x + rx) / denominator;
-            double pFrontLeft = (y - x - rx) / denominator;
-            double pBackLeft =  (y + x - rx) / denominator;
+            double pFrontLeft = (y + x - rx) / denominator;
+            double pBackLeft = (y - x - rx) / denominator;
 
             //frontLeft.setPower(pFrontLeft * 1);
             //frontRight.setPower(pFrontRight * 1);
             //backLeft.setPower(pBackLeft * 1);
             //backRight.setPower(pBackRight * 1);
-
-
 
 
             final double fallSpeed = 1;
@@ -116,15 +178,16 @@ public class teleopBlue extends LinearOpMode {
                 drive.drive(pFrontRight - 0.5, pBackRight + 0.5,
                         pFrontLeft + 0.5, pBackLeft - 0.5);
             } else {
-                drive.drive(pFrontRight, pBackRight, pFrontLeft, pBackLeft);
+                drive.drive(pFrontRight * 0.95, pBackRight * 0.95, pFrontLeft, pBackLeft);
+
             }
 
 
-             //else {
-               // frontLeft.setPower(pFrontLeft * 1);
-                //frontRight.setPower(pFrontRight * 1);
-                //backRight.setPower(pBackRight * 1);
-                //backLeft.setPower(pBackLeft * 1);
+            //else {
+            // frontLeft.setPower(pFrontLeft * 1);
+            //frontRight.setPower(pFrontRight * 1);
+            //backRight.setPower(pBackRight * 1);
+            //backLeft.setPower(pBackLeft * 1);
             //}
 
             /*if (currentGamepad2.right_bumper && !previousGamepad2.right_bumper) {
@@ -160,59 +223,68 @@ public class teleopBlue extends LinearOpMode {
                 } else if (gamepad2.dpad_left){
                     slides.back_to_start();
                 }*/
-                if (gamepad1.left_trigger > 0.1){
-                    slides.dump();
-                } else if (gamepad1.right_trigger > 0.1){
-                    slides.back_to_start();
-                }
+            if (gamepad1.left_trigger > 0.1) {
+                slides.dump();
+            } else if (gamepad1.right_trigger > 0.1) {
+                slides.back_to_start();
+            }
+
+
+            if (currentGamepad1.square && !previousGamepad1.square) {
+                intakeToggle4 = !intakeToggle4;
+            }
+            if (intakeToggle4) {
+                slides.launch();
+            } else {
+                slides.reload();
+            }
 
 
 
-                if (currentGamepad1.square && !previousGamepad1.square) {
-                    intakeToggle4 = !intakeToggle4;
-                }
-                if (intakeToggle4) {
-                    slides.launch();
-                } else {
-                    slides.reload();
-                }
+                /*if (currentGamepad2.dpad_right && !previousGamepad2.dpad_right) {
+                    intakeToggle5 = !intakeToggle5;
+                    intakeToggle6 = !intakeToggle6;
+                } else if (!intakeToggle5) {
+                lusp.setColor("blue");
+                } else if (intake)*/
 
 
-                if (gamepad2.x) {
-                    slides.lower_hang();
-                } else if (gamepad2.triangle) {
-                    slides.initiate_hang();
-                } else {
-                    slides.stop_hang();
-                }
+            if (gamepad2.x) {
+                slides.lower_hang();
+            } else if (gamepad2.triangle) {
+                slides.initiate_hang();
+            } else {
+                slides.stop_hang();
+            }
 
 
-                if (gamepad2.dpad_up) {
-                    slides.retract(liftSpeed);
-                    s = 0;
+            if (gamepad2.dpad_up) {
+                slides.retract(liftSpeed);
+                s = 0;
 
-                } else if (gamepad2.dpad_down) {
-                    slides.extend(fallSpeed);
-                    s = 0;
+            } else if (gamepad2.dpad_down) {
+                slides.extend(fallSpeed);
+                s = 0;
 
-                } else if (s == 1) {
-                    slides.moveToStage(stage);
-                } else {
-                    slides.stall();
-                }
-                if (gamepad2.right_trigger > 0.1
-                ) {
-                    intake.grab_pixel();
+            } else if (s == 1) {
+                slides.moveToStage(stage);
+            } else {
+                slides.stall();
+            }
+            if (gamepad2.right_trigger > 0.1
+            ) {
+                intake.grab_pixel();
 
-                } else if (gamepad2.left_trigger > 0.1) {
-                    intake.reverse_intake();
+            } else if (gamepad2.left_trigger > 0.1) {
+                intake.reverse_intake();
 
-                } else {
-                    intake.no_feed();
-                } if (gamepad1.dpad_left) {
+            } else {
+                intake.no_feed();
+            }
+            if (gamepad1.dpad_left) {
                 intake.open_pixie();
-            } else if (gamepad1.dpad_right){
-                    intake.close_pixie();
+            } else if (gamepad1.dpad_right) {
+                intake.close_pixie();
             }
 
                 /*if (gamepad2.right_bumper) {
@@ -224,50 +296,63 @@ public class teleopBlue extends LinearOpMode {
                     intake.dont_move();
 
                 }*/
-                resetRuntime();
+            resetRuntime();
 
 
-                if (runtime.seconds() > 80 && runtime.seconds() < 90) {
+            if (runtime.seconds() > 80 && runtime.seconds() < 90) {
 
-                    lusp.flash("yellow", "purple", runtime);
+                lusp.flash("yellow", "purple", runtime);
 
-                } else {
+            } else {
 
 
-                    if (((DistanceSensor) colorSensor).getDistance(DistanceUnit.MM) < 35 ^
-                            ((DistanceSensor) colorSensor2).getDistance(DistanceUnit.MM) < 52) {
+                if (gamepad2.right_bumper) {
+                    LEDPaint = LEDPaint + 1;
+                } else if (LEDPaint == 1) {
+                    lusp.setColor("yellow");
+                } else if (LEDPaint == 2) {
+                    lusp.setColor("green");
+                } else if (LEDPaint == 3) {
+                    lusp.setColor("purple");
+                } else if (LEDPaint == 4) {
+                    lusp.setColor("white");
+                }
+                if (LEDPaint == 5) {
+                    LEDPaint = 1;
+                }
+            }
+
+            if (gamepad2.left_bumper) {
+                LEDPaint = 0;
+                while (LEDPaint == 0) {
+
+                    if (((DistanceSensor) fanum).getDistance(DistanceUnit.MM) >= 35 &&
+                            ((DistanceSensor) tax).getDistance(DistanceUnit.MM) < 30) {
+
+                        lusp.setColor("purple");
+
+                    } else if (((DistanceSensor) fanum).getDistance(DistanceUnit.MM) < 30 &&
+                            ((DistanceSensor) tax).getDistance(DistanceUnit.MM) >= 35) {
+
+                        lusp.setColor("purple");
+
+                    } else if (((DistanceSensor) fanum).getDistance(DistanceUnit.MM) < 30 &&
+                            ((DistanceSensor) tax).getDistance(DistanceUnit.MM) < 30) {
 
                         lusp.setColor("yellow");
-
-                        if (i == 0) {
-
-                            gamepad1.rumble(500);
-                            gamepad2.rumble(500);
-                            ++i;
-
-                        }
-
-
-                    } else if (((DistanceSensor) colorSensor).getDistance(DistanceUnit.MM) < 35 &&
-                            ((DistanceSensor) colorSensor2).getDistance(DistanceUnit.MM) < 52) {
-
-                        lusp.setColor("green");
-                        if (i == 1) {
-
-                            gamepad1.rumble(500);
-                            gamepad2.rumble(500);
-                            ++i;
-
-                        }
                     } else {
 
                         lusp.setColor("dark blue");
-                        i = 0;
+
 
                     }
+                    if (gamepad2.circle) {
+                        LEDPaint = 1;
+                    }
                 }
-
             }
         }
     }
+}
+
 
